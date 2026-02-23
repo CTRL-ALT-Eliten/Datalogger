@@ -7,4 +7,6 @@ Hvis ændringer skabte ustabilitet, blev der vendt tilbage til en fungerende ver
 
 Repoet afspejler en udviklingsproces med fokus på stabilitet og fungerende løsninger.
 
+Hele forløbet kan ses på tilhørende projekt-fane
+
 Gruppen består af flg. medlemmer; Nicklas Jensen, Oliver Nicholai Bengtsson, Muhammet Kart & Lucas Patrick Olsen
