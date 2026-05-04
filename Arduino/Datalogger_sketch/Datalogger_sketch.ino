@@ -6,7 +6,7 @@
 #include "Mic.h"
 #include "OLED.h"
 
-// Komponenter & pins test
+// Komponenter & pins
 TempSensor sensor1(7);
 TempSensor sensor2(6);
 LysSensor ldr(A0);
