@@ -27,10 +27,10 @@ String Measurement::toJson() const {
 
   doc["temp_inside"] = round1(tempInside);
   doc["humidity_inside"] = round1(humidityInside);
-  doc["co2"] = co2;
+  doc["eco2"] = co2;
 
   doc["temp_outside"] = round1(tempOutside);
-  doc["tryk"] = round1(pressureOutside);
+  doc["pressure_outside"] = round1(pressureOutside);
 
   // Database-kolonnen hedder "condensation", så JSON-feltet skal hedde det samme.
   // Værdien er vores condensation_risk: 0 = ingen risiko, 1 = risiko.
