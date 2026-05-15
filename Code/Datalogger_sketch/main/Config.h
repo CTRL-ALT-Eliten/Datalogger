@@ -5,8 +5,8 @@
 // WIFI / API
 // -----------------------------
 
-const char* const WIFI_SSID = "KoegeGuest";
-const char* const WIFI_PASSWORD = "";
+const char* const WIFI_SSID = "test";
+const char* const WIFI_PASSWORD = "pwtest";
 
 const char* const API_URL = "http://152.115.77.165:50326/measurements";
 const char* const API_KEY = "bee123";
