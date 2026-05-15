@@ -5,14 +5,21 @@
 // WIFI / API
 // -----------------------------
 
-const char* const WIFI_SSID = "Zealand-DAT";
-const char* const WIFI_PASSWORD = "DatzeaWifi!";
+const char* const WIFI_SSID = "KoegeGuest";
+const char* const WIFI_PASSWORD = "";
 
-const char* const API_URL = "http://152.115.77.165:50126/measurements";
+const char* const API_URL = "http://152.115.77.165:50326/measurements";
 const char* const API_KEY = "bee123";
 
 const char* const DEVICE_ID = "logger_001";
 const int LOGGER_ID_EX = 1;
+
+// -----------------------------
+// LED
+// -----------------------------
+const char* const LED_STATUS_URL = "http://152.115.77.165:50326/api/led/1";
+#define LED_PIN 2
+const unsigned long LED_POLL_INTERVAL_MS = 2000;
 
 // -----------------------------
 // PINS
