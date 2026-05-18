@@ -33,6 +33,7 @@ bool ApiClient::getLedStateFromApi() {
 
     HTTPClient http;
     http.begin(LED_STATUS_URL); // URL fra Config.h
+    http.addHeader("x-api-key", API_KEY);
 
     int httpCode = http.GET();
     if (httpCode != 200) {
