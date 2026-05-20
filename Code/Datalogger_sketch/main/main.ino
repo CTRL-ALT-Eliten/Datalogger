@@ -3,6 +3,7 @@
 #include "WiFiManagerCustom.h"
 #include "ApiClient.h"
 #include "SDLogger.h"
+unsigned long lastLedPoll = 0; // til at tracke polling interval
 
 SensorManager sensors;
 WiFiManagerCustom wifi;
@@ -18,6 +19,8 @@ void setup() {
   sensors.begin();
   sdLogger.begin();
   wifi.connect();
+  pinMode(LED_PIN, OUTPUT);
+digitalWrite(LED_PIN, LOW); // start slukket
 }
 
 void loop() {
@@ -42,6 +45,21 @@ void loop() {
   } else {
     sdLogger.save(json);
   }
+
+  // LED poll
+if (wifi.isConnected() && millis() - lastLedPoll >= LED_POLL_INTERVAL_MS) {
+    lastLedPoll = millis();
+
+    bool ledOn = api.getLedStateFromApi();
+
+    if (ledOn) {
+        digitalWrite(LED_PIN, HIGH);
+        Serial.println("LED: ON");
+    } else {
+        digitalWrite(LED_PIN, LOW);
+        Serial.println("LED: OFF");
+    }
+}
 
   delay(MEASUREMENT_INTERVAL_MS);
 }

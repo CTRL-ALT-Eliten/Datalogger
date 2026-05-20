@@ -9,11 +9,16 @@ SensorManager::SensorManager()
 void SensorManager::begin() {
   Wire.begin(I2C_SDA, I2C_SCL);
 
-  if (!rtc.begin()) {
+if (!rtc.begin()) {
     Serial.println("RTC ikke fundet");
-  } else {
+} else {
     Serial.println("RTC OK");
-  }
+    
+    if (rtc.lostPower()) {
+        Serial.println("RTC mistede strøm - sætter tid fra compile-tid");
+        rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+    }
+}
 
   if (!bmp.begin(0x76)) {
     Serial.println("BMP280 ikke fundet på 0x76. Prøver 0x77...");
