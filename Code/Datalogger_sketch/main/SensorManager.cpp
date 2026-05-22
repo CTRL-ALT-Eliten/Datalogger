@@ -20,7 +20,6 @@ void SensorManager::begin() {
 
     Serial.println("RTC OK");
 
-    rtc.adjust(DateTime(2026, 5, 12, 14, 35, 0));
   }
 
   if (!bmp.begin(0x76)) {
