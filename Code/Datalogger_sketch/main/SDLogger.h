@@ -12,6 +12,7 @@ public:
 
 private:
   const char* offlineFilePath = "/offline.txt";
+  const char* tmpFilePath     = "/offline_tmp.txt";
 };
 
 #endif
