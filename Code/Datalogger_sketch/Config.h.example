@@ -5,11 +5,18 @@
 // WIFI / API
 // -----------------------------
 
-const char* const WIFI_SSID = "WIFI_SSID";
-const char* const WIFI_PASSWORD = "WIFI_PASSWORD";
+// -----------------------------
+// SIM800L / GPRS
+// -----------------------------
+const char* const SIM_APN = "data.tre.dk";
+const char* const SIM_APN_USER = ""; // tomt hvis ikke krævet
+const char* const SIM_APN_PASS = ""; // tomt hvis ikke krævet
 
-const char* const API_URL = "http://SERVER_IP:PORT/measurements";
-const char* const API_KEY = "API_KEY";
+#define SIM_RX_PIN 16   // ESP32 RX2 ← SIM800L TX
+#define SIM_TX_PIN 17   // ESP32 TX2 → SIM800L RX
+
+const char* const API_URL = "http://server/measurements";
+const char* const API_KEY = "api";
 
 const char* const DEVICE_ID = "logger_001";
 const int LOGGER_ID_EX = 1;
@@ -17,8 +24,12 @@ const int LOGGER_ID_EX = 1;
 // -----------------------------
 // LED
 // -----------------------------
-const char* const LED_STATUS_URL = "http://SERVER_IP:PORT/led/1";
+const char* const LED_STATUS_URL = "http://server/led/1";
 #define LED_PIN 2
+// INMP441 I2S mikrofon
+#define I2S_SCK_PIN  26   // BCK (Bit Clock)
+#define I2S_WS_PIN   25   // WS / LRCK (Word Select)
+#define I2S_SD_PIN   32   // SD (Serial Data ind)
 const unsigned long LED_POLL_INTERVAL_MS = 2000;
 
 // -----------------------------
@@ -29,7 +40,7 @@ const unsigned long LED_POLL_INTERVAL_MS = 2000;
 #define I2C_SCL 22
 
 #define LDR_PIN 34
-#define MIC_PIN 35
+
 
 #define SD_CS 5
 
