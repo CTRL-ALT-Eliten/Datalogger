@@ -4,6 +4,7 @@
 #include "ApiClient.h"
 #include "SDLogger.h"
 unsigned long lastLedPoll = 0; // til at tracke polling interval
+unsigned long startTime = 0; // til restart interval
 
 SensorManager sensors;
 WiFiManagerCustom wifi;
@@ -21,6 +22,7 @@ void setup() {
   wifi.connect();
   pinMode(LED_PIN, OUTPUT);
 digitalWrite(LED_PIN, LOW); // start slukket
+startTime = millis();
 }
 
 void loop() {
@@ -56,6 +58,11 @@ void loop() {
       digitalWrite(LED_PIN, LOW);
       Serial.println("LED: OFF");
     }
+  }
+    if (millis() - startTime >= RESTART_INTERVAL_MS) {
+    Serial.println("Planlagt genstart efter 1 time...");
+    delay(500); // giv Serial tid til at printe
+    esp_restart();
   }
 
   delay(MEASUREMENT_INTERVAL_MS);

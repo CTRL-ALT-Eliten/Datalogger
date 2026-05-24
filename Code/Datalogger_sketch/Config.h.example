@@ -8,9 +8,10 @@
 // -----------------------------
 // SIM800L / GPRS
 // -----------------------------
-const char* const SIM_APN = "data.tre.dk";
-const char* const SIM_APN_USER = ""; // tomt hvis ikke krævet
-const char* const SIM_APN_PASS = ""; // tomt hvis ikke krævet
+const char* const SIM_APN = "apn";
+const char* const SIM_APN_USER = ""; // ikke krævet
+const char* const SIM_APN_PASS = ""; // ikke krævet
+const unsigned long RESTART_INTERVAL_MS = 3600000UL; // til restart
 
 #define SIM_RX_PIN 16   // ESP32 RX2 ← SIM800L TX
 #define SIM_TX_PIN 17   // ESP32 TX2 → SIM800L RX
@@ -18,7 +19,7 @@ const char* const SIM_APN_PASS = ""; // tomt hvis ikke krævet
 const char* const API_URL = "http://server/measurements";
 const char* const API_KEY = "api";
 
-const char* const DEVICE_ID = "logger_001";
+const char* const DEVICE_ID = "logger_XXX";
 const int LOGGER_ID_EX = 1;
 
 // -----------------------------
@@ -53,6 +54,6 @@ const unsigned long LED_POLL_INTERVAL_MS = 2000;
 // TIMING
 // -----------------------------
 
-const unsigned long MEASUREMENT_INTERVAL_MS = 60000;
+const unsigned long MEASUREMENT_INTERVAL_MS = 300000;
 
 #endif
