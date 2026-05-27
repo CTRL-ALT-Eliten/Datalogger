@@ -12,6 +12,9 @@ public:
 
 private:
   const char* offlineFilePath = "/offline.txt";
+  const char* tmpFilePath     = "/offline_tmp.txt";
+  void initI2S();
+int readSoundLevel();
 };
 
-#endif
+#endif  

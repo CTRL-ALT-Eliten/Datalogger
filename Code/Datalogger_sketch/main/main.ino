@@ -4,6 +4,7 @@
 #include "ApiClient.h"
 #include "SDLogger.h"
 unsigned long lastLedPoll = 0; // til at tracke polling interval
+unsigned long startTime = 0; // til restart interval
 
 SensorManager sensors;
 WiFiManagerCustom wifi;
@@ -21,6 +22,7 @@ void setup() {
   wifi.connect();
   pinMode(LED_PIN, OUTPUT);
 digitalWrite(LED_PIN, LOW); // start slukket
+startTime = millis();
 }
 
 void loop() {
@@ -30,36 +32,38 @@ void loop() {
   Serial.println("Ny måling:");
   Serial.println(json);
 
+  // Gem altid til SD først — data er sikret uanset hvad der sker bagefter
+  sdLogger.save(json);
+
+  // Forsøg reconnect hvis forbindelsen er nede
   if (!wifi.isConnected()) {
     wifi.connect();
   }
 
+  // Hvis forbindelsen er oppe, upload alt gemt data (inkl. netop gemte måling)
   if (wifi.isConnected()) {
     sdLogger.uploadStoredData(api);
-
-    bool uploaded = api.upload(json);
-
-    if (!uploaded) {
-      sdLogger.save(json);
-    }
-  } else {
-    sdLogger.save(json);
   }
 
   // LED poll
-if (wifi.isConnected() && millis() - lastLedPoll >= LED_POLL_INTERVAL_MS) {
+  if (wifi.isConnected() && millis() - lastLedPoll >= LED_POLL_INTERVAL_MS) {
     lastLedPoll = millis();
 
     bool ledOn = api.getLedStateFromApi();
 
     if (ledOn) {
-        digitalWrite(LED_PIN, HIGH);
-        Serial.println("LED: ON");
+      digitalWrite(LED_PIN, HIGH);
+      Serial.println("LED: ON");
     } else {
-        digitalWrite(LED_PIN, LOW);
-        Serial.println("LED: OFF");
+      digitalWrite(LED_PIN, LOW);
+      Serial.println("LED: OFF");
     }
-}
+  }
+    if (millis() - startTime >= RESTART_INTERVAL_MS) {
+    Serial.println("Planlagt genstart efter 1 time...");
+    delay(500); // giv Serial tid til at printe
+    esp_restart();
+  }
 
   delay(MEASUREMENT_INTERVAL_MS);
 }
