@@ -1,5 +1,6 @@
 #ifndef MEASUREMENT_H
 #define MEASUREMENT_H
+#include <driver/i2s.h>
 
 #include <Arduino.h>
 
@@ -26,6 +27,8 @@ public:
   String toJson() const;
 
 private:
+void initI2S();
+int readSoundLevel();
   float round1(float value) const;
 };
 

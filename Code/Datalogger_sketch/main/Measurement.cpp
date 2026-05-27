@@ -17,7 +17,7 @@ Measurement::Measurement()
 float Measurement::round1(float value) const {
   return round(value * 10.0) / 10.0;
 }
-
+// Opsætning til JSON for at kunne uploade til dashboard
 String Measurement::toJson() const {
   StaticJsonDocument<384> doc;
 
@@ -31,9 +31,6 @@ String Measurement::toJson() const {
 
   doc["temp_outside"] = round1(tempOutside);
   doc["pressure_outside"] = round1(pressureOutside);
-
-  // Database-kolonnen hedder "condensation", så JSON-feltet skal hedde det samme.
-  // Værdien er vores condensation_risk: 0 = ingen risiko, 1 = risiko.
   doc["condensation"] = condensationRisk ? 1 : 0;
 
   doc["light"] = light;
