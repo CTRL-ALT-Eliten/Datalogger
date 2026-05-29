@@ -77,8 +77,7 @@ void SDLogger::uploadStoredData(ApiClient& apiClient) {
   tmpFile.close();
 
   SD.remove(offlineFilePath);
-
-  // Ved genoprettelse af forbindelse, uploades gemte målinger
+// cleanup af SD kort efter korrekt upload af gemte filer
   if (!anyFailed) {
     SD.remove(tmpFilePath);
     Serial.println("Alle offline målinger uploadet og fil slettet");

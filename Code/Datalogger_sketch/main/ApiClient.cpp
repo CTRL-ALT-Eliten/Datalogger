@@ -203,7 +203,7 @@ bool ApiClient::getLedStateFromApi() {
   sendAT("AT+HTTPPARA=\"USERDATA\",\"x-api-key: " + String(API_KEY) + "\"");
 
   int code = httpAction(0);  // GET
-
+// Hivs modtaget statuskode ikke er 200, print fejl i serialprint
   if (code != 200) {
     Serial.print("LED GET fejl. HTTP code: ");
     Serial.println(code);
