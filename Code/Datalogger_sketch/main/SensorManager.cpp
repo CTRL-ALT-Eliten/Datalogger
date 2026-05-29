@@ -10,12 +10,11 @@ SensorManager::SensorManager()
 void SensorManager::begin() {
 
   Wire.begin(I2C_SDA, I2C_SCL);
-
   initI2S();
 
   if (!rtc.begin()) {
     Serial.println("RTC ikke fundet");
-
+    
   } else {
     Serial.println("RTC OK");
  //   rtc.adjust(DateTime(2026, 5, 24, 11(time), 33(minut), 0(sekund)));
@@ -34,7 +33,7 @@ void SensorManager::begin() {
   } else {
     Serial.println("BMP280 OK på 0x76");
   }
-
+  
   if (!aht.begin()) {
     Serial.println("AHT20/AHT21 ikke fundet");
 
@@ -55,36 +54,26 @@ void SensorManager::begin() {
 Measurement SensorManager::readMeasurement() {
 
   Measurement measurement;
-
   measurement.deviceId = DEVICE_ID;
   measurement.loggerIdEx = LOGGER_ID_EX;
-
   measurement.light = analogRead(LDR_PIN);
-
   measurement.sound = readSoundLevel();
-
   Serial.print("Sound level: ");
   Serial.println(measurement.sound);
-
   sensors_event_t humidityEvent;
   sensors_event_t tempEvent;
-
   aht.getEvent(&humidityEvent, &tempEvent);
-
   measurement.tempInside = tempEvent.temperature;
   measurement.humidityInside = humidityEvent.relative_humidity;
-
   ens160.set_envdata(
     measurement.tempInside,
     measurement.humidityInside
   );
 
   ens160.measure();
-
   measurement.co2 = ens160.geteCO2();
   
   measurement.tempOutside = bmp.readTemperature();
-
   measurement.pressureOutside = bmp.readPressure() / 100.0;
 
   float dewPointInside = calculateDewPoint(
@@ -96,20 +85,16 @@ Measurement SensorManager::readMeasurement() {
     hasValidReading(dewPointInside) &&
     hasValidReading(measurement.tempOutside)
   ) {
-
     measurement.condensationRisk =
       measurement.tempOutside <= dewPointInside;
   }
 
   DateTime now = rtc.now();
-
   measurement.rtcTimestamp = createTimestamp(now);
-
   return measurement;
 }
 
 String SensorManager::createTimestamp(const DateTime& now) const {
-
   char timestamp[30];
 
   sprintf(
@@ -122,7 +107,6 @@ String SensorManager::createTimestamp(const DateTime& now) const {
     now.minute(),
     now.second()
   );
-
   return String(timestamp);
 }
 
@@ -136,28 +120,23 @@ float SensorManager::calculateDewPoint(
     !hasValidReading(humidity) ||
     humidity <= 0.0
   ) {
-
     return NAN;
   }
 
   const float a = 17.62;
   const float b = 243.12;
-
   const float gamma =
     log(humidity / 100.0) +
     ((a * temperature) / (b + temperature));
-
   return (b * gamma) / (a - gamma);
 }
 
 bool SensorManager::hasValidReading(float value) const {
-
   return !isnan(value) && !isinf(value);
 }
-
+  // Start interface til I2S kommunikation
 void SensorManager::initI2S() {
 
-  // Start interface til I2S kommunikation
   i2s_chan_config_t chan_cfg =
     I2S_CHANNEL_DEFAULT_CONFIG(
       I2S_NUM_0,
@@ -181,15 +160,10 @@ void SensorManager::initI2S() {
     .gpio_cfg = {
 
       .mclk = I2S_GPIO_UNUSED,
-
       .bclk = (gpio_num_t)I2S_SCK_PIN,
-
       .ws = (gpio_num_t)I2S_WS_PIN,
-
       .dout = I2S_GPIO_UNUSED,
-
       .din = (gpio_num_t)I2S_SD_PIN,
-
       .invert_flags = {
         .mclk_inv = false,
         .bclk_inv = false,
@@ -199,29 +173,21 @@ void SensorManager::initI2S() {
   };
 
   esp_err_t err;
-
   err = i2s_channel_init_std_mode(
     _rxHandle,
     &std_cfg
   );
 
   if (err != ESP_OK) {
-
     Serial.print("I2S init fejl: ");
-
     Serial.println(err);
-
     return;
   }
 
   err = i2s_channel_enable(_rxHandle);
-
   if (err != ESP_OK) {
-
     Serial.print("I2S enable fejl: ");
-
     Serial.println(err);
-
     return;
   }
 
@@ -232,7 +198,6 @@ int SensorManager::readSoundLevel() {
   const int SAMPLE_COUNT = 1024;
   int32_t samples[SAMPLE_COUNT];
   size_t bytesRead = 0;
-
   esp_err_t result = i2s_channel_read(
     _rxHandle, samples, sizeof(samples), &bytesRead, pdMS_TO_TICKS(1000)
   );
@@ -261,7 +226,6 @@ int SensorManager::readSoundLevel() {
   }
 
   // Vis hvad >> 8 giver
-
   // RMS med >> 8
   int64_t sum8 = 0;
   for (int i = 0; i < count; i++) {
@@ -277,7 +241,6 @@ int SensorManager::readSoundLevel() {
     sum14 += (int64_t)s * s;
   }
   int rms14 = sqrt((double)sum14 / count);
-
 
   return rms8;
 }

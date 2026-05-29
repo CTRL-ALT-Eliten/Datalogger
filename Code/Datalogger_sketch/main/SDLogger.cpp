@@ -81,6 +81,7 @@ void SDLogger::uploadStoredData(ApiClient& apiClient) {
   if (!anyFailed) {
     SD.remove(tmpFilePath);
     Serial.println("Alle offline målinger uploadet og fil slettet");
+
   } else {
     File src = SD.open(tmpFilePath, FILE_READ);
     File dst = SD.open(offlineFilePath, FILE_WRITE);

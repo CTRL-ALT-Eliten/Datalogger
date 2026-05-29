@@ -136,9 +136,6 @@ bool ApiClient::upload(const String& json) {
   sendAT("AT+HTTPPARA=\"CONTENT\",\"application/json\"");
 
   // API-nøglen sendes som custom header via USERDATA.
-  // Bemærk: dette kræver nyere SIM800-firmware. Virker det ikke,
-  // er alternativet at sende nøglen som query-parameter i URL'en
-  // og lade serveren acceptere den der.
   sendAT("AT+HTTPPARA=\"USERDATA\",\"x-api-key: " + String(API_KEY) + "\"");
 
   // Annoncér hvor mange bytes vi vil sende, og hvor længe modemmet
@@ -187,7 +184,6 @@ bool ApiClient::upload(const String& json) {
   int code = httpAction(1);
 
   // Læs serverens svar (nyttigt til fejlfinding, fx 401 = forkert API-nøgle).
-
   sendAT("AT+HTTPTERM", 2000);
 
   Serial.print("HTTP code: ");
