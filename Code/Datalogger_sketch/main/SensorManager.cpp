@@ -14,51 +14,39 @@ void SensorManager::begin() {
   initI2S();
 
   if (!rtc.begin()) {
-
     Serial.println("RTC ikke fundet");
 
   } else {
-
     Serial.println("RTC OK");
  //   rtc.adjust(DateTime(2026, 5, 24, 11(time), 33(minut), 0(sekund)));
-
   }
 
   if (!bmp.begin(0x76)) {
-
     Serial.println("BMP280 ikke fundet på 0x76. Prøver 0x77...");
 
     if (!bmp.begin(0x77)) {
-
       Serial.println("BMP280 ikke fundet");
 
     } else {
-
       Serial.println("BMP280 OK på 0x77");
     }
 
   } else {
-
     Serial.println("BMP280 OK på 0x76");
   }
 
   if (!aht.begin()) {
-
     Serial.println("AHT20/AHT21 ikke fundet");
 
   } else {
-
     Serial.println("AHT OK");
   }
 
   if (!ens160.begin()) {
-
     Serial.println("ENS160 ikke fundet");
 
   } else {
-
     ens160.setMode(ENS160_OPMODE_STD);
-
     Serial.println("ENS160 OK");
   }
 }
