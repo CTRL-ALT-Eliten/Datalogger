@@ -3,7 +3,7 @@ Beehive Datalogger
 Dette repository har fungeret som fælles arbejdsplatform for gruppen.
 
 Vi har arbejdet ud fra en stabil baseline, som alle pull’ede fra, hvorefter der blev arbejdet videre og testet lokalt.
-Vi har en test-område branch, som vi har brugt til netop det samt debugging og troubleshooting.
+Vi har en test-område branch, som vi har brugt til netop det, samt debugging og troubleshooting.
 
 Hvis ændringer skabte ustabilitet, blev der vendt tilbage til en fungerende version og arbejdede fortsat derfra.
 
