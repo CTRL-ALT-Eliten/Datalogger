@@ -77,12 +77,11 @@ void SDLogger::uploadStoredData(ApiClient& apiClient) {
   tmpFile.close();
 
   SD.remove(offlineFilePath);
-
+// cleanup af SD kort efter korrekt upload af gemte filer
   if (!anyFailed) {
     SD.remove(tmpFilePath);
     Serial.println("Alle offline målinger uploadet og fil slettet");
   } else {
-    // Arduino SD har ikke rename — kopier tmp til offline.txt
     File src = SD.open(tmpFilePath, FILE_READ);
     File dst = SD.open(offlineFilePath, FILE_WRITE);
     if (src && dst) {
