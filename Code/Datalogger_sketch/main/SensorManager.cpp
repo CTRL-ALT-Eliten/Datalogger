@@ -82,9 +82,7 @@ Measurement SensorManager::readMeasurement() {
   ens160.measure();
 
   measurement.co2 = ens160.geteCO2();
-
-  ens160.getTVOC();
-
+  
   measurement.tempOutside = bmp.readTemperature();
 
   measurement.pressureOutside = bmp.readPressure() / 100.0;
