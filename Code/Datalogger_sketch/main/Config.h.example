@@ -5,11 +5,11 @@
 // WIFI / API
 // -----------------------------
 
-const char* const WIFI_SSID = "YOUR_WIFI_SSID";
-const char* const WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
+const char* const WIFI_SSID = "WIFI_SSID";
+const char* const WIFI_PASSWORD = "WIFI_PASSWORD";
 
-const char* const API_URL = "http://YOUR_SERVER_IP:PORT/measurements";
-const char* const API_KEY = "YOUR_API_KEY";
+const char* const API_URL = "http://SERVER_IP:PORT/measurements";
+const char* const API_KEY = "API_KEY";
 
 const char* const DEVICE_ID = "logger_001";
 const int LOGGER_ID_EX = 1;
@@ -17,7 +17,7 @@ const int LOGGER_ID_EX = 1;
 // -----------------------------
 // LED
 // -----------------------------
-const char* const LED_STATUS_URL = "http://YOUR_SERVER_IP:PORT/led/1";
+const char* const LED_STATUS_URL = "http://SERVER_IP:PORT/led/1";
 #define LED_PIN 2
 const unsigned long LED_POLL_INTERVAL_MS = 2000;
 
